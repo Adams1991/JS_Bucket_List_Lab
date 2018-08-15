@@ -34,6 +34,7 @@ ItemView.prototype.createDetail = function (label, text) {
 
 ItemView.prototype.createCompleteButton = function (itemId) {
   const button = document.createElement('button');
+  button.textContent = "Complete";
   button.classList.add('button-btn');
   button.value = itemId;
 
@@ -45,6 +46,7 @@ ItemView.prototype.createCompleteButton = function (itemId) {
 };
 ItemView.prototype.createDeleteButton = function (itemId) {
   const button = document.createElement('button');
+  button.textContent = "Delete";
   button.classList.add('delete-btn');
   button.value = itemId;
 

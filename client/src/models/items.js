@@ -28,7 +28,7 @@ Items.prototype.getData = function () {
 
 Items.prototype.postItem = function (item) {
   this.request.post(item)
-    .then(() => {
+    .then((items) => {
       PubSub.publish("Items:data-loaded", items);
     })
     .catch(console.error());
