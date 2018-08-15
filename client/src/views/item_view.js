@@ -1,20 +1,30 @@
 const PubSub = require('../helpers/pub_sub.js');
 
-const ItemView = function (container) {
+const ItemView = function (container, item) {
   this.container = container;
+  this.item = item;
 };
 
-ItemView.prototype.render = function (item) {
+ItemView.prototype.render = function () {
   const itemContainer = document.createElement('div');
   itemContainer.id = 'item';
 
-  const title = this.createHeading(item.title);
+
+  const title = this.createHeading(this.item.title);
   itemContainer.appendChild(title);
 
-  const complete = this.createCompleteButton(item._id);
+  const doneTitle = document.createElement('p');
+  doneTitle.textContent = 'Completed?';
+  itemContainer.appendChild(doneTitle);
+
+  const done = document.createElement('p');
+  done.textContent = this.item.complete;
+  itemContainer.appendChild(done);
+
+  const complete = this.createCompleteButton(this.item._id);
   itemContainer.appendChild(complete);
 
-  const deleteButton = this.createDeleteButton(item._id);
+  const deleteButton = this.createDeleteButton(this.item._id);
   itemContainer.appendChild(deleteButton);
 
   this.container.appendChild(itemContainer);
@@ -32,18 +42,19 @@ ItemView.prototype.createDetail = function (label, text) {
   return detail;
 };
 
-ItemView.prototype.createCompleteButton = function (itemId) {
-  const button = document.createElement('button');
+ItemView.prototype.createCompleteButton = function () {
+  const button = document.createElement('checkbox');
   button.textContent = "Complete";
   button.classList.add('button-btn');
-  button.value = itemId;
 
   button.addEventListener('click', (evt) => {
-    PubSub.publish('ItemView:item-complete-clicked', evt.target.value);
+    this.item.complete = true;
+    PubSub.publish('ItemView:item-complete-clicked', this.item);
   });
 
   return button;
 };
+
 ItemView.prototype.createDeleteButton = function (itemId) {
   const button = document.createElement('button');
   button.textContent = "Delete";

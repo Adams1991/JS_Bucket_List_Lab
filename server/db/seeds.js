@@ -4,10 +4,10 @@ db.dropDatabase();
 db.items.insertMany([
   {
     title: "Get a job",
-    complete: "false"
+    complete: false
   },
   {
     title: "Go to Japan",
-    complete: "false"
+    complete: false
   }
 ]);

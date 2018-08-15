@@ -20,7 +20,7 @@ ItemFormView.prototype.handleSubmit = function (evt) {
 ItemFormView.prototype.createItem = function (form) {
   const newItem = {
     title: form.title.value,
-    complete: "false"
+    complete: false
   };
 
   return newItem;

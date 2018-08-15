@@ -15,6 +15,10 @@ Items.prototype.bindEvents = function () {
   PubSub.subscribe('ItemView:item-submitted', (evt) => {
     this.postItem(evt.detail);
   })
+
+  PubSub.subscribe('ItemView:item-complete-clicked', (evt) => {
+    this.updateItem(evt.detail);
+  })
 };
 
 Items.prototype.getData = function () {
@@ -40,6 +44,14 @@ Items.prototype.deleteItem = function (itemId) {
       PubSub.publish('Items:data-loaded', items);
     })
     .catch(console.error);
+};
+
+Items.prototype.updateItem = function (item) {
+  this.request.put(item._id, item)
+    .then((items) => {
+      PubSub.publish("Items:data-loaded", items);
+    })
+    .catch(console.error());
 };
 
 module.exports = Items;

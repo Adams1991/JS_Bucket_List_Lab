@@ -59,8 +59,28 @@ const createRouter = function (collection) {
       });
   });
 
+
+  router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const updatedData = req.body.complete;
+    console.log(updatedData);
+    collection
+      .updateOne(
+        { _id: ObjectID(id) },
+        { $set: { "complete": updatedData} }
+      )
+      .then(() => {
+        collection
+        .find()
+        .toArray()
+        .then((docs) => res.json(docs));
+    })
+  });
+
+
   return router;
 
 };
+
 
 module.exports = createRouter;

@@ -8,16 +8,16 @@ const ItemListView = function (container) {
 ItemListView.prototype.bindEvents = function () {
   PubSub.subscribe('Items:data-loaded', (evt) => {
     this.render(evt.detail);
-    console.log(evt.detail);
   });
 };
 
 ItemListView.prototype.render = function (items) {
-  console.log(items);
   this.container.innerHTML = '';
-  const itemView = new ItemView(this.container);
-  items.forEach((item) => itemView.render(item));
-  
+  items.forEach((item) => {
+    const itemView = new ItemView(this.container, item);
+    itemView.render();
+  });
+
 };
 
 module.exports = ItemListView;
